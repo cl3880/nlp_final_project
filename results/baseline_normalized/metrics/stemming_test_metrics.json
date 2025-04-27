@@ -1,0 +1,15 @@
+{
+  "model_name": "stemming_test",
+  "threshold": 0.0,
+  "precision": 0.4888888888888889,
+  "recall": 0.9166666666666666,
+  "f1": 0.6376811594202898,
+  "f2": 0.7801418439716312,
+  "roc_auc": 0.9514604810996564,
+  "wss@95": 0.6977064220183486,
+  "high_recall_threshold": 0.0,
+  "high_recall_precision": 0.11009174311926606,
+  "high_recall_f1": 0.19834710743801653,
+  "high_recall_achieved": 1.0,
+  "timestamp": "2025-04-27 17:03:52"
+}

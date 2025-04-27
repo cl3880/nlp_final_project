@@ -2,9 +2,12 @@
 """
 Extract PubMed data, dedupe, label relevance, optionally run manual title cleanup, generate detailed report, and save a clean CSV for modeling.
 """
+import os
 import re
 import csv
+import json
 import argparse
+import config
 from pathlib import Path
 from difflib import SequenceMatcher
 from collections import defaultdict
@@ -263,10 +266,8 @@ def manual_review_duplicates(groups):
         choice = input("Enter entry numbers to keep (comma-separated), or 'a' to keep all, 'm' to merge: ").strip().lower()
         
         if choice == 'a':
-            # Keep all as separate entries
             reviewed_groups[key] = entries
         elif choice == 'm':
-            # Merge entries
             base = entries[0].copy()
             base['pmids'] = [r['pmid'] for r in entries]
             base['all_abstracts'] = [r.get('abstract', '') for r in entries]
@@ -275,7 +276,6 @@ def manual_review_duplicates(groups):
             reviewed_groups[key] = [base]
         else:
             try:
-                # Keep only selected entries
                 indices = [int(i.strip()) - 1 for i in choice.split(',') if i.strip()]
                 valid_indices = [i for i in indices if 0 <= i < len(entries)]
                 if valid_indices:
@@ -287,7 +287,6 @@ def manual_review_duplicates(groups):
                 print("  Invalid input, keeping all.")
                 reviewed_groups[key] = entries
                 
-    # Flatten the dictionary of lists into a single list
     result = []
     for entries in reviewed_groups.values():
         result.extend(entries)
@@ -313,36 +312,34 @@ def main():
         help='Run manual review')
     args = parser.parse_args()
 
+    os.makedirs(config.PATHS["build_data_dir"], exist_ok=True)
+
     out_path = Path(args.output_csv)
     if out_path.parent in (Path('.'), Path()):
-        out_path = Path('data/processed') / out_path.name
+        out_path = Path(config.PATHS["data_processed"]) / out_path.name
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
     report_path = Path(args.report_file)
     if report_path.parent in (Path('.'), Path()):
-        report_path = Path('reports') / report_path.name
+        report_path = Path(config.PATHS["build_data_dir"]) / report_path.name
     report_path.parent.mkdir(parents=True, exist_ok=True)
 
     records = extract_pubmed(args.pubmed_txt)
     pubmed_titles = [r['title'] for r in records]
 
-    # Group by more robust deduplication key
     groups = defaultdict(list)
     for r in records:
         key = get_deduplication_key(r)
         groups[key].append(r)
     
-    # Show statistics about grouping
     print(f"Grouped {len(records)} records into {len(groups)} unique keys")
     multi_entries = sum(1 for entries in groups.values() if len(entries) > 1)
     print(f"Found {multi_entries} keys with multiple entries")
     
-    # Process groups based on manual review or automatic merging
     if args.manual:
         merged = manual_review_duplicates(groups)
-        all_dupes = []  # We don't track dupes the same way with manual review
+        all_dupes = []
     else:
-        # Automatic merging
         merged, all_dupes = [], []
         for grp in groups.values():
             if len(grp) == 1:
@@ -356,7 +353,7 @@ def main():
                 base['all_keywords'] = sum(
                     (r.get('keywords', []) for r in grp), [])
                 merged.append(base)
-                all_dupes.extend(grp[1:])  # First one is kept, rest are dupes
+                all_dupes.extend(grp[1:])
 
     print(f"After deduplication: {len(merged)} records")
 
@@ -378,6 +375,17 @@ def main():
     create_detailed_report(str(report_path), all_dupes, unmatched, labeled)
     save_csv(labeled, str(out_path))
 
+    stats = {
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "total_records": len(records),
+        "unique_records": len(merged),
+        "relevant_records": sum(r.get('relevant', False) for r in labeled),
+        "duplicates": len(all_dupes),
+        "unmatched_titles": len(unmatched)
+    }
+    
+    stats_path = Path(config.PATHS["build_data_dir"]) / "stats.json"
+    with open(stats_path, 'w') as f:
+        json.dump(stats, f, indent=2)
 
-if __name__ == '__main__':
-    main()
+    print(f"Data build complete. Results in {config.PATHS['build_data_dir']}")

@@ -1,0 +1,29 @@
+===== TEXT NORMALIZATION COMPARISON =====
+
+Dataset Information:
+- Total records: 2175
+- Relevant documents: 242 (11.1%)
+
+Baseline Model:
+- Test AUC: 0.9467
+- Test Precision: 0.4667
+- Test Recall: 0.8750
+- Test F1: 0.6087
+- Test WSS@95: 0.6977
+
+Stemming Model:
+- Test AUC: 0.9515
+- Test Precision: 0.4889
+- Test Recall: 0.9167
+- Test F1: 0.6377
+- Test WSS@95: 0.6977
+
+Lemmatization Model:
+- Test AUC: 0.9482
+- Test Precision: 0.5000
+- Test Recall: 0.9167
+- Test F1: 0.6471
+- Test WSS@95: 0.6885
+
+The Lemmatization model performs best on F1 score.
+The Baseline model saves most work at 95% recall.

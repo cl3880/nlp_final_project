@@ -1,0 +1,43 @@
+ERROR ANALYSIS REPORT
+====================
+
+Total test examples: 218
+Correct predictions: 192 (88.1%)
+Incorrect predictions: 26 (11.9%)
+
+False positives: 23 (10.6%)
+False negatives: 3 (1.4%)
+
+False Positive Analysis:
+- 23 out of 23 (100.0%) contain explicit irrelevant terms
+- Most common words in false positives:
+  * patients: 134
+  * srs: 88
+  * avms: 84
+  * obliteration: 82
+  * avm: 64
+  * years: 62
+  * after: 60
+  * radiosurgery: 56
+  * hemorrhage: 54
+  * arteriovenous: 47
+
+False Negative Analysis:
+- 3 out of 3 (100.0%) contain explicit relevant terms
+- Most common words in false negatives:
+  * obliteration: 15
+  * patients: 10
+  * gamma: 7
+  * knife: 7
+  * malformations: 7
+  * cases: 7
+  * avm: 7
+  * dose: 7
+  * adults: 7
+  * complications: 6
+
+Conclusions:
+- Most false negatives contain relevant terms but are still missed.
+  This suggests context or specific combinations of terms matter.
+- Many false positives contain terms that should mark them as irrelevant.
+  This suggests the model needs to weight these terms more heavily.

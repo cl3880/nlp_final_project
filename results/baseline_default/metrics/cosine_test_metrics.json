@@ -1,0 +1,15 @@
+{
+  "model_name": "cosine_test",
+  "threshold": 0.0,
+  "precision": 0.4722222222222222,
+  "recall": 0.7083333333333334,
+  "f1": 0.5666666666666667,
+  "f2": 0.6439393939393939,
+  "roc_auc": 0.9276202749140894,
+  "wss@95": 0.6839449541284404,
+  "high_recall_threshold": 0.0,
+  "high_recall_precision": 0.11009174311926606,
+  "high_recall_f1": 0.19834710743801653,
+  "high_recall_achieved": 1.0,
+  "timestamp": "2025-04-27 16:54:12"
+}

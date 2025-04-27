@@ -1,0 +1,56 @@
+===== BASELINE MODEL SUMMARY =====
+
+Dataset: data/processed/data_final.csv
+Total records: 2175
+Relevant documents: 242 (11.1%)
+
+Data splits:
+- Train: 1739 examples (194 relevant)
+- Validation: 218 examples (24 relevant)
+- Test: 218 examples (24 relevant)
+
+Model parameters:
+- clf__C: 1
+- clf__class_weight: balanced
+- clf__penalty: l2
+- clf__solver: liblinear
+- tfidf__max_features: 5000
+- tfidf__min_df: 5
+- tfidf__ngram_range: (1, 2)
+
+Cross-validation results:
+- f1: 0.6418 (±0.0209)
+- precision: 0.5164 (±0.0190)
+- recall: 0.8503 (±0.0529)
+- roc_auc: 0.9434 (±0.0166)
+
+Validation results:
+- threshold: 0.0000
+- precision: 0.4200
+- recall: 0.8750
+- f1: 0.5676
+- f2: 0.7192
+- roc_auc: 0.9491
+- wss@95: 0.6564
+- high_recall_threshold: 0.0000
+- high_recall_precision: 0.1101
+- high_recall_f1: 0.1983
+- high_recall_achieved: 1.0000
+
+Test results:
+- threshold: 0.0000
+- precision: 0.4667
+- recall: 0.8750
+- f1: 0.6087
+- f2: 0.7447
+- roc_auc: 0.9467
+- wss@95: 0.6977
+- high_recall_threshold: 0.0000
+- high_recall_precision: 0.1101
+- high_recall_f1: 0.1983
+- high_recall_achieved: 1.0000
+
+Error analysis:
+- False positives: 24
+- False negatives: 3
+- Error analysis file: analysis/error_analysis.csv

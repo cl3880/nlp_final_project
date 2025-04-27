@@ -1,0 +1,23 @@
+{
+  "date": "2025-04-27 16:16:05",
+  "parameters": {
+    "clf__C": 1,
+    "clf__class_weight": "balanced",
+    "clf__penalty": "l2",
+    "clf__solver": "liblinear",
+    "tfidf__max_features": 5000,
+    "tfidf__min_df": 5,
+    "tfidf__ngram_range": [
+      1,
+      2
+    ]
+  },
+  "f1_mean": 0.6417725133197799,
+  "f1_std": 0.020886104132900478,
+  "precision_mean": 0.5164162557136943,
+  "precision_std": 0.01904800051061081,
+  "recall_mean": 0.8503373819163293,
+  "recall_std": 0.05288426831595494,
+  "roc_auc_mean": 0.943395394136324,
+  "roc_auc_std": 0.016568658331907973
+}

@@ -1,0 +1,23 @@
+===== BASELINE MODELS SUMMARY =====
+
+Dataset Information:
+- Total records: 2175
+- Relevant documents: 242 (11.1%)
+
+Logistic Regression Model:
+- Test AUC: 0.9463
+- Test Precision: 0.4773
+- Test Recall: 0.8750
+- Test F1: 0.6176
+- Test WSS@95: 0.6931
+
+Cosine Similarity Model:
+- Threshold: 0.3000
+- Test AUC: 0.9276
+- Test Precision: 0.4722
+- Test Recall: 0.7083
+- Test F1: 0.5667
+- Test WSS@95: 0.6839
+
+The Logistic Regression model performs better on F1 score.
+The Logistic Regression model saves more work at 95% recall.
