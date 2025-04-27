@@ -1,0 +1,7 @@
+pandas
+scikit-learn
+matplotlib
+numpy
+seaborn
+wordninja
+rapidfuzz
